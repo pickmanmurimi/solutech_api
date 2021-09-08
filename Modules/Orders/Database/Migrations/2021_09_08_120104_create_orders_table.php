@@ -17,7 +17,7 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->uuid('uuid');
             $table->string('name')->comment('this will be a place holder for what would have been items relationship');
-            $table->string('status')->nullable()
+            $table->string('status')->default('pending')
                 ->comment('pending, loading, dispatched, delivered'); // pending, loading, dispatched, delivered
             $table->dateTime('dispatched_at')->nullable();
             $table->dateTime('loaded_at')->nullable();
