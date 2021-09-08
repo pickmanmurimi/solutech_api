@@ -1,7 +1,9 @@
 <?php
+
 namespace Modules\Depots\Database\factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\Depots\Entities\Depot;
 
 class DepotFactory extends Factory
 {
@@ -10,17 +12,19 @@ class DepotFactory extends Factory
      *
      * @var string
      */
-    protected $model = \Modules\Depots\Entities\Depot::class;
+    protected $model = Depot::class;
 
     /**
      * Define the model's default state.
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             //
+            "name" => $this->faker->randomElement([ "Mombasa Depot", "Nairobi Depot"]),
+            "address" => $this->faker->address,
         ];
     }
 }

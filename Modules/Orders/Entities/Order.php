@@ -3,16 +3,19 @@
 namespace Modules\Orders\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Modules\Common\Traits\JsonableOptions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Common\Traits\UsesUuid;
+use Modules\Depots\Entities\Depot;
 use Modules\Orders\Database\factories\OrderFactory;
 use Modules\Vehicles\Entities\Vehicle;
 
 
 class Order extends Model
 {
-    use HasFactory, JsonableOptions;
+    use HasFactory, JsonableOptions, UsesUuid;
 
     /**
      * @var string[] $fillable
@@ -55,5 +58,13 @@ class Order extends Model
     public function vehicle(): BelongsToMany
     {
         return $this->belongsToMany(Vehicle::class, 'deliveries');
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function depot(): BelongsTo
+    {
+        return $this->belongsTo(Depot::class);
     }
 }
