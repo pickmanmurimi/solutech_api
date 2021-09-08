@@ -24,7 +24,7 @@ class Order extends Model
         "name",
         "status",
         "dispatched_at",
-        "loaded_at",
+        "loading_at",
         "delivered_at",
         "address",
         "depot_id",

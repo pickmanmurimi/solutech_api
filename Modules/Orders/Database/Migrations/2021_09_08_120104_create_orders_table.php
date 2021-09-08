@@ -20,7 +20,7 @@ class CreateOrdersTable extends Migration
             $table->string('status')->default('pending')
                 ->comment('pending, loading, dispatched, delivered'); // pending, loading, dispatched, delivered
             $table->dateTime('dispatched_at')->nullable();
-            $table->dateTime('loaded_at')->nullable();
+            $table->dateTime('loading_at')->nullable();
             $table->dateTime('delivered_at')->nullable();
             $table->string("address");
             $table->integer("depot_id")->comment('order items are in this depot');

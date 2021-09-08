@@ -19,7 +19,10 @@ class OrdersController extends Controller
     {
         $paginate = $request->get('paginate', 10);
 
-        $orders = Order::with('depot')->orderBy('created_at', 'DESC')->paginate();
+        $orders = Order::search('status', $request->get('status'))
+            ->with('depot')
+            ->orderBy('created_at', 'DESC')->paginate();
+
         return OrderResource::collection($orders);
     }
 }

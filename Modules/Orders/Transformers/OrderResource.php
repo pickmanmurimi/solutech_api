@@ -11,7 +11,7 @@ use Modules\Depots\Transformers\DepotResource;
  * @property mixed name
  * @property mixed status
  * @property mixed dispatched_at
- * @property mixed loaded_at
+ * @property mixed loading_at
  * @property mixed delivered_at
  * @property mixed address
  * @property mixed depot
@@ -32,7 +32,7 @@ class OrderResource extends JsonResource
             "name" => $this->name,
             "status" => $this->status,
             "dispatched_at" => $this->dispatched_at,
-            "loaded_at" => $this->loaded_at,
+            "loading_at" => $this->loading_at,
             "delivered_at" => $this->delivered_at,
             "address" => $this->address,
             'created_at' => $this->created_at,
