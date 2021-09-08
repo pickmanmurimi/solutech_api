@@ -1,0 +1,11 @@
+{
+    "User": true,
+    "Common": true,
+    "Orders": true,
+    "Vehicles": true,
+    "Authentication": true,
+    "Depot": true,
+    "Vehicle": true,
+    "Depots": true,
+    "Deliveries": true
+}

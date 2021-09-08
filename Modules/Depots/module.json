@@ -1,0 +1,13 @@
+{
+    "name": "Depots",
+    "alias": "depots",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Depots\\Providers\\DepotsServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
