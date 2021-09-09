@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Modules\Common\Traits\JsonableOptions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Common\Traits\UsesUuid;
+use Modules\Orders\Entities\Delivery;
 use Modules\Orders\Entities\Order;
 use Modules\Vehicles\Database\factories\VehicleFactory;
 
@@ -27,6 +29,13 @@ use Modules\Vehicles\Database\factories\VehicleFactory;
 class Vehicle extends Model
 {
     use HasFactory, JsonableOptions, UsesUuid;
+
+    /**
+     * Vehicle States
+     */
+    public const AVAILABLE = 'available';
+    public const LOADING = 'loading';
+    public const TRANSIT = 'transit';
 
     protected $fillable = [
         "name",
@@ -71,5 +80,13 @@ class Vehicle extends Model
     public function vehicleType(): BelongsTo
     {
         return $this->belongsTo(VehicleType::class);
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function deliveries(): HasOne
+    {
+        return $this->hasOne(Delivery::class);
     }
 }

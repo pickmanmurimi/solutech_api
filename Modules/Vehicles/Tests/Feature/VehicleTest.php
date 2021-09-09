@@ -125,4 +125,23 @@ class VehicleTest extends TestCase
         $response->assertJson(['message' => 'Vehicle deleted', 'success' => true]);
         $this->assertEmpty(Vehicle::first());
     }
+
+    /**
+     * @test
+     */
+    public function can_get_loading_vehicles()
+    {
+        // add orders
+        // attach to a vehicle
+        // get all vehicles where order is loading
+    }
+
+    /**
+     * @test
+     */
+    public function can_get_on_transit_vehicles()
+    {
+
+    }
+
 }

@@ -14,3 +14,6 @@ use Illuminate\Http\Request;
 */
 
 Route::get('order', 'OrdersController@index');
+
+// delivery
+Route::post('delivery/load', 'DeliveryController@load');

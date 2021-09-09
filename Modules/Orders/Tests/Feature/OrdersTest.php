@@ -4,6 +4,7 @@ namespace Modules\Orders\Tests\Feature;
 
 use Modules\Depots\Entities\Depot;
 use Modules\Orders\Entities\Order;
+use Modules\Vehicles\Entities\Vehicle;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -29,6 +30,27 @@ class OrdersTest extends TestCase
                 $this->getOrdersStructure()
             ]
         ]);
+    }
+
+    /**
+     * @return array
+     */
+    public function getOrdersStructure(): array
+    {
+        return [
+            'uuid',
+            'name',
+            'status',
+            'dispatched_at',
+            'loading_at',
+            'delivered_at',
+            'address',
+            'depot' => [
+                'uuid',
+                'name',
+                'address',
+            ]
+        ];
     }
 
     /**
@@ -97,7 +119,7 @@ class OrdersTest extends TestCase
         $order = json_decode($response->getContent(), true);
         $this->assertSame($order['data'][0]['status'], 'dispatched');
         $this->assertNotEmpty($order['data'][0]['loading_at']);
-        $this->assertNotEmpty($order['data'][0]['dispatched_at'] );
+        $this->assertNotEmpty($order['data'][0]['dispatched_at']);
         $response->assertJsonStructure([
             'data' => [
                 $this->getOrdersStructure()
@@ -124,8 +146,8 @@ class OrdersTest extends TestCase
         $order = json_decode($response->getContent(), true);
         $this->assertSame($order['data'][0]['status'], 'delivered');
         $this->assertNotEmpty($order['data'][0]['loading_at']);
-        $this->assertNotEmpty($order['data'][0]['dispatched_at'] );
-        $this->assertNotEmpty($order['data'][0]['delivered_at'] );
+        $this->assertNotEmpty($order['data'][0]['dispatched_at']);
+        $this->assertNotEmpty($order['data'][0]['delivered_at']);
         $response->assertJsonStructure([
             'data' => [
                 $this->getOrdersStructure()
@@ -134,23 +156,66 @@ class OrdersTest extends TestCase
     }
 
     /**
-     * @return array
+     * @test
      */
-    public function getOrdersStructure(): array
+    public function can_load_an_order()
     {
-        return [
-            'uuid',
-            'name',
-            'status',
-            'dispatched_at',
-            'loading_at',
-            'delivered_at',
-            'address',
-            'depot' => [
-                'uuid',
-                'name',
-                'address',
-            ]
+        $this->authenticate();
+
+        Depot::factory()->count(2)->create();
+        $order = Order::factory()->create();
+        $vehicle = Vehicle::factory()->create();
+        $data = [
+            'vehicle_uuid' => $vehicle->uuid,
+            'order_uuid' => $order->uuid,
         ];
+
+        $response = $this->postJson('api/v1/orders/delivery/load', $data);
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => [
+                "uuid",
+                "order",
+                "vehicle",
+                "created_at",
+                "created_at_readable",
+            ]
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function can_dispatch_an_order()
+    {
+
+        $this->authenticate();
+
+        Depot::factory()->count(2)->create();
+        $order = Order::factory()->count(1)->create();
+        $vehicle = Vehicle::factory()->create();
+
+        $response = $this->postJson('api/v1/orders/delivery/dispatch');
+
+        $response->assertStatus(200);
+        $response->assertJson(['message' => 'Order is dispatched', 'success' => true]);
+    }
+
+    /**
+     * @test
+     */
+    public function can_deliver_an_order()
+    {
+        $this->authenticate();
+
+        Depot::factory()->count(2)->create();
+        $order = Order::factory()->count(1)->create();
+        $vehicle = Vehicle::factory()->create();
+
+        $response = $this->postJson('api/v1/orders/delivery/deliver');
+
+        $response->assertStatus(200);
+        $response->assertJson(['message' => 'Order is delivered', 'success' => true]);
     }
 }

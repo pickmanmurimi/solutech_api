@@ -26,7 +26,7 @@ class VehicleFactory extends Factory
         return [
             "name" => $this->faker->name,
             "make" => $this->faker->randomElement(['Isuzu', 'Tata', 'Mercedes']),
-            "status" => 'Available',
+            "status" => Vehicle::AVAILABLE,
             "vehicle_type_id" => random_int(1, 2),
         ];
     }
