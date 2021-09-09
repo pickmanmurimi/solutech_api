@@ -5,6 +5,7 @@ namespace Modules\Orders\Tests\Feature;
 use Modules\Depots\Entities\Depot;
 use Modules\Orders\Entities\Order;
 use Modules\Vehicles\Entities\Vehicle;
+use Str;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -189,17 +190,26 @@ class OrdersTest extends TestCase
      */
     public function can_dispatch_an_order()
     {
-
         $this->authenticate();
 
         Depot::factory()->count(2)->create();
-        $order = Order::factory()->count(1)->create();
-        $vehicle = Vehicle::factory()->create();
+        $order = Order::factory()->create(['loading_at' => now(), 'status' => Order::LOADING]);
+        $vehicle = Vehicle::factory()->create(['status' => Vehicle::LOADING]);
+        $delivery_uuid = Str::uuid();
+        $order->vehicle()->attach($vehicle, ['uuid' => $delivery_uuid, 'created_at' => now(), 'updated_at' =>now() ]);
 
-        $response = $this->postJson('api/v1/orders/delivery/dispatch');
+        $data = [
+            'order_uuid' => $order->uuid,
+        ];
+
+        $response = $this->postJson('api/v1/orders/delivery/dispatch', $data);
 
         $response->assertStatus(200);
-        $response->assertJson(['message' => 'Order is dispatched', 'success' => true]);
+        $response->assertJsonStructure([
+            'data' =>
+                $this->getOrdersStructure()
+
+        ]);
     }
 
     /**
@@ -210,12 +220,22 @@ class OrdersTest extends TestCase
         $this->authenticate();
 
         Depot::factory()->count(2)->create();
-        $order = Order::factory()->count(1)->create();
-        $vehicle = Vehicle::factory()->create();
+        $order = Order::factory()->create(['dispatched_at' => now(), 'status' => Order::DISPATCH]);
+        $vehicle = Vehicle::factory()->create(['status' => Vehicle::TRANSIT]);
+        $delivery_uuid = Str::uuid();
+        $order->vehicle()->attach($vehicle, ['uuid' => $delivery_uuid, 'created_at' => now(), 'updated_at' =>now() ]);
 
-        $response = $this->postJson('api/v1/orders/delivery/deliver');
+        $data = [
+            'order_uuid' => $order->uuid,
+        ];
+
+        $response = $this->postJson('api/v1/orders/delivery/deliver', $data);
 
         $response->assertStatus(200);
-        $response->assertJson(['message' => 'Order is delivered', 'success' => true]);
+        $response->assertJsonStructure([
+            'data' =>
+                $this->getOrdersStructure()
+
+        ]);
     }
 }

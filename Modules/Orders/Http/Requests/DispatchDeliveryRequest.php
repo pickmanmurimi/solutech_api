@@ -5,13 +5,8 @@ namespace Modules\Orders\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Modules\Orders\Entities\Order;
-use Modules\Vehicles\Entities\Vehicle;
 
-/**
- * @property mixed vehicle_uuid
- * @property mixed order_uuid
- */
-class LoadDeliveryRequest extends FormRequest
+class DispatchDeliveryRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -22,10 +17,8 @@ class LoadDeliveryRequest extends FormRequest
     {
         return [
             //
-            'vehicle_uuid' => ['required', Rule::exists('vehicles','uuid')
-                ->where('status', Vehicle::AVAILABLE )],
             'order_uuid' => ['required', Rule::exists('orders','uuid')
-                ->where('status',Order::PENDING )],
+                ->where('status',Order::LOADING )]
         ];
     }
 

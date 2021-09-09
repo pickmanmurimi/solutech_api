@@ -17,3 +17,5 @@ Route::get('order', 'OrdersController@index');
 
 // delivery
 Route::post('delivery/load', 'DeliveryController@load');
+Route::post('delivery/dispatch', 'DeliveryController@dispatchDelivery');
+Route::post('delivery/deliver', 'DeliveryController@deliverOrder');
