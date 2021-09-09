@@ -1,3 +1,9 @@
+#Into
+This is a backend Api for the solutech evaluation test.
+
+The codebase follows a modular structure, thus all functional
+parts of the api are found under the Modules folder.
+
 # Setup
 
 #### Run the following commands to get started.
