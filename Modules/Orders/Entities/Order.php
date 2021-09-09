@@ -3,16 +3,28 @@
 namespace Modules\Orders\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Modules\Common\Traits\JsonableOptions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Common\Traits\UsesUuid;
+use Modules\Depots\Entities\Depot;
 use Modules\Orders\Database\factories\OrderFactory;
 use Modules\Vehicles\Entities\Vehicle;
 
 
 class Order extends Model
 {
-    use HasFactory, JsonableOptions;
+    /**
+     * Order States
+     */
+    public const PENDING = 'pending';
+    public const LOADING = 'loading';
+    public const DISPATCH = 'dispatched';
+    public const DELIVERED = 'delivered';
+
+    use HasFactory, JsonableOptions, UsesUuid;
 
     /**
      * @var string[] $fillable
@@ -21,7 +33,7 @@ class Order extends Model
         "name",
         "status",
         "dispatched_at",
-        "loaded_at",
+        "loading_at",
         "delivered_at",
         "address",
         "depot_id",
@@ -55,5 +67,21 @@ class Order extends Model
     public function vehicle(): BelongsToMany
     {
         return $this->belongsToMany(Vehicle::class, 'deliveries');
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function depot(): BelongsTo
+    {
+        return $this->belongsTo(Depot::class);
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function deliveries(): HasOne
+    {
+        return $this->hasOne(Delivery::class);
     }
 }

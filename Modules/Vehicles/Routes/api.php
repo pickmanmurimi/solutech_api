@@ -18,3 +18,6 @@ Route::get('vehicle', 'VehiclesController@index');
 Route::get('vehicle/{vehicle_uuid}', 'VehiclesController@show');
 Route::put('vehicle/{vehicle_uuid}', 'VehiclesController@update');
 Route::delete('vehicle/{vehicle_uuid}', 'VehiclesController@destroy');
+
+
+Route::get('vehicle-type', 'VehicleTypesController@index');

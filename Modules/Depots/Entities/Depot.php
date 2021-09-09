@@ -2,24 +2,30 @@
 
 namespace Modules\Depots\Entities;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Common\Traits\JsonableOptions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Common\Traits\UsesUuid;
+use Modules\Depots\Database\factories\DepotFactory;
+use Modules\Orders\Entities\Order;
 
 
 /**
  * Modules\Depots\Entities\Depot
  *
- * @property-read \Modules\Depots\Entities\Option $options_object
- * @method static \Modules\Depots\Database\factories\DepotFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|Depot newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Depot newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Depot query()
- * @mixin \Eloquent
+ * @property-read Option $options_object
+ * @method static DepotFactory factory(...$parameters)
+ * @method static Builder|Depot newModelQuery()
+ * @method static Builder|Depot newQuery()
+ * @method static Builder|Depot query()
+ * @mixin Eloquent
  */
 class Depot extends Model
 {
-    use HasFactory, JsonableOptions;
+    use HasFactory, JsonableOptions, UsesUuid;
 
     protected $fillable = [];
 
@@ -30,8 +36,25 @@ class Depot extends Model
         'options' => 'json'
     ];
 
-    protected static function newFactory()
+    /**
+     * @return DepotFactory
+     */
+    protected static function newFactory(): DepotFactory
     {
-        return \Modules\Depots\Database\factories\DepotFactory::new();
+        return DepotFactory::new();
+    }
+
+    /**
+     * --------------------------------------------------------------------------
+     * Relationships
+     * --------------------------------------------------------------------------
+     */
+
+    /**
+     * @return HasMany
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
     }
 }

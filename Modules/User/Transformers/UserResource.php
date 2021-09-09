@@ -24,10 +24,10 @@ class UserResource extends JsonResource
     {
         return $this->resource ?
             [
-                "name" => $this->uuid,
-                "make" => $this->name,
-                "status" => $this->email,
-                "vehicle_type" => $this->email_verified_at,
+                "uuid" => $this->uuid,
+                "name" => $this->name,
+                "email" => $this->email,
+                "email_verified_at" => $this->email_verified_at,
                 'created_at' => $this->created_at,
                 'created_at_readable' => $this->created_at->format('d M Y H:i:s'),
             ] : [];

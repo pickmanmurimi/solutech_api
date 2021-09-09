@@ -24,7 +24,9 @@ class VehiclesController extends Controller
     {
         $paginate = $request->get('paginate', 10);
 
-        $vehicles = Vehicle::with('vehicleType')->paginate($paginate);
+        $vehicles = Vehicle::with('vehicleType')
+            ->orderBy('created_at', 'DESC')
+            ->paginate($paginate);
 
         return VehicleResource::collection($vehicles);
     }
@@ -63,6 +65,7 @@ class VehiclesController extends Controller
      * Update the specified resource in storage.
      * @param UpdateVehicleRequest $request
      * @param $vehicle_uuid
+     * @return VehicleResource
      */
     public function update(UpdateVehicleRequest $request, $vehicle_uuid)
     {
