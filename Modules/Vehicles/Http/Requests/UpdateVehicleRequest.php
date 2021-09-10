@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 /**
- * @property mixed name
+ * @property mixed registration
  * @property mixed make
  * @property mixed status
  * @property mixed vehicle_type_id
@@ -23,7 +23,7 @@ class UpdateVehicleRequest extends FormRequest
         $vehicle_uuid = $this->route('vehicle_uuid');
         return [
             //
-            "name" => ['required', Rule::unique('vehicles','name')->ignore('uuid', $vehicle_uuid )],
+            "registration" => ['required', Rule::unique('vehicles','registration')->ignore('uuid', $vehicle_uuid )],
             "make" => ['required'],
             "vehicle_type_id" => ['required', 'exists:vehicle_types,id'],
         ];

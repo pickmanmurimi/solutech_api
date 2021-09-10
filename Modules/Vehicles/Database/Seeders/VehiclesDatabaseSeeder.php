@@ -4,6 +4,8 @@ namespace Modules\Vehicles\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Vehicles\Entities\Vehicle;
+use Modules\Vehicles\Entities\VehicleType;
 
 class VehiclesDatabaseSeeder extends Seeder
 {
@@ -16,6 +18,7 @@ class VehiclesDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        // $this->call("OthersTableSeeder");
+        VehicleType::factory()->count(2)->create();
+        $vehicle = Vehicle::factory()->count(10)->create();
     }
 }

@@ -16,7 +16,7 @@ class CreateVehiclesTable extends Migration
         Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid');
-            $table->string('name');
+            $table->string('registration');
             $table->string('make');
             $table->string('status')->default('available'); // available, loading, on transit
 

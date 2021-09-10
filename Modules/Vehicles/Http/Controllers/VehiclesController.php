@@ -24,7 +24,8 @@ class VehiclesController extends Controller
     {
         $paginate = $request->get('paginate', 10);
 
-        $vehicles = Vehicle::with('vehicleType')
+        $vehicles = Vehicle::search('status', $request->input('status'))
+            ->with('vehicleType')
             ->orderBy('created_at', 'DESC')
             ->paginate($paginate);
 
@@ -42,7 +43,7 @@ class VehiclesController extends Controller
 
         /** @var Vehicle $vehicle */
         $vehicle = $vehicle_type->vehicles()->create([
-            "name" => $request->name,
+            "registration" => $request->registration,
             "make" => $request->make,
             "status" => $request->status,
         ]);
@@ -74,7 +75,7 @@ class VehiclesController extends Controller
 
         /** @var Vehicle $vehicle */
         $vehicle->update([
-            "name" => $request->name,
+            "registration" => $request->registration,
             "make" => $request->make,
             "vehicle_type_id" => $vehicle_type->id,
         ]);

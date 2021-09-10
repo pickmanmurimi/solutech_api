@@ -24,7 +24,9 @@ class VehicleFactory extends Factory
     public function definition()
     {
         return [
-            "name" => $this->faker->name,
+            "registration" => "KB" . $this->faker
+                    ->randomElement(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R,', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'])
+                . " " . random_int(100, 999),
             "make" => $this->faker->randomElement(['Isuzu', 'Tata', 'Mercedes']),
             "status" => Vehicle::AVAILABLE,
             "vehicle_type_id" => random_int(1, 2),

@@ -51,13 +51,13 @@ class VehicleTest extends TestCase
         $response->assertJsonStructure([
             'data' => [
                 'uuid',
-                'name',
+                'registration',
                 'make',
                 'status',
                 'vehicle_type' => ['uuid', 'name'],
             ]
         ]);
-        $this->assertEquals( $vehicle_update_data['name'], Vehicle::first()->name );
+        $this->assertEquals( $vehicle_update_data['registration'], Vehicle::first()->registration );
     }
 
 
@@ -67,8 +67,8 @@ class VehicleTest extends TestCase
      */
     public function can_get_vehicles()
     {
-        VehicleType::factory()->create()->count(2);
-        Vehicle::factory()->create();
+        VehicleType::factory()->count(2)->create();
+        Vehicle::factory()->count(3)->create();
         $this->authenticate();
 
         $response = $this->getJson('/api/v1/vehicles/vehicle');
@@ -77,7 +77,7 @@ class VehicleTest extends TestCase
         $response->assertJsonStructure([
             'data' => [[
                 'uuid',
-                'name',
+                'registration',
                 'make',
                 'status',
                 'vehicle_type' => ['uuid', 'name'],
@@ -91,7 +91,7 @@ class VehicleTest extends TestCase
      */
     public function can_get_vehicle()
     {
-        VehicleType::factory()->create()->count(2);
+        VehicleType::factory()->count(2)->create();
         $vehicle = Vehicle::factory()->create();
         $this->authenticate();
 
@@ -101,7 +101,7 @@ class VehicleTest extends TestCase
         $response->assertJsonStructure([
             'data' => [
                 'uuid',
-                'name',
+                'registration',
                 'make',
                 'status',
                 'vehicle_type' => ['uuid', 'name'],

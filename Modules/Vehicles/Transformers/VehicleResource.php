@@ -7,12 +7,12 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Modules\Vehicles\Entities\VehicleType;
 
 /**
- * @property mixed name
+ * @property mixed registration
  * @property mixed make
  * @property mixed status
- * @property mixed vehicle_type
  * @property mixed uuid
  * @property mixed created_at
+ * @property mixed vehicleType
  */
 class VehicleResource extends JsonResource
 {
@@ -27,10 +27,10 @@ class VehicleResource extends JsonResource
         return $this->resource ?
             [
                 "uuid" => $this->uuid,
-                "name" => $this->name,
+                "registration" => $this->registration,
                 "make" => $this->make,
                 "status" => $this->status,
-                "vehicle_type" => new VehicleTypeResource($this->vehicle_type),
+                "vehicle_type" => new VehicleTypeResource($this->vehicleType),
                 'created_at' => $this->created_at,
                 'created_at_readable' => $this->created_at->format('d M Y H:i:s'),
             ] : [];
