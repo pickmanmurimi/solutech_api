@@ -24,3 +24,12 @@ them first to make sure everything runs smoothly.
 #### Run tests
 
     php artisan test
+
+#### Create a test user
+    
+    php artisan create-user --first_name={name} --last_name={name} --email={email}
+
+You can leave out the options to create a 
+default user with the credentials, email: `optimus@gmail.com` password: `1234567890`.
+
+The default password is `1234567890`
