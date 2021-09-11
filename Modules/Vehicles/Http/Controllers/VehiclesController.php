@@ -25,6 +25,8 @@ class VehiclesController extends Controller
         $paginate = $request->get('paginate', 10);
 
         $vehicles = Vehicle::search('status', $request->input('status'))
+            ->search('registration', $request->input('registration'))
+            ->search('make', $request->input('make'))
             ->with('vehicleType')
             ->orderBy('created_at', 'DESC')
             ->paginate($paginate);
