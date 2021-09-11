@@ -23,7 +23,7 @@ class UpdateVehicleRequest extends FormRequest
         $vehicle_uuid = $this->route('vehicle_uuid');
         return [
             //
-            "registration" => ['required', Rule::unique('vehicles','registration')->ignore('uuid', $vehicle_uuid )],
+            "registration" => ['required', Rule::unique('vehicles','registration')->ignore($vehicle_uuid, 'uuid' )],
             "make" => ['required'],
             "vehicle_type_id" => ['required', 'exists:vehicle_types,id'],
         ];

@@ -22,14 +22,12 @@ class VehiclesController extends Controller
      */
     public function index(Request $request): AnonymousResourceCollection
     {
-        $paginate = $request->get('paginate', 10);
-
         $vehicles = Vehicle::search('status', $request->input('status'))
             ->search('registration', $request->input('registration'))
             ->search('make', $request->input('make'))
             ->with('vehicleType')
             ->orderBy('created_at', 'DESC')
-            ->paginate($paginate);
+            ->paginate($request->input('paginate', 10));
 
         return VehicleResource::collection($vehicles);
     }

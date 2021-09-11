@@ -23,7 +23,7 @@ class DepotFactory extends Factory
     {
         return [
             //
-            "name" => $this->faker->randomElement([ "Mombasa Depot", "Nairobi Depot"]),
+            "name" => $this->faker->unique()->randomElement([ "Mombasa Depot", "Nairobi Depot"]),
             "address" => $this->faker->address,
         ];
     }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
+ * @property mixed id
  * @property mixed uuid
  * @property mixed name
  * @property mixed created_at
@@ -22,6 +23,7 @@ class VehicleTypeResource extends JsonResource
     {
         return $this->resource ?
             [
+                "id" => $this->id,
                 "uuid" => $this->uuid,
                 "name" => $this->name,
                 'created_at' => $this->created_at,

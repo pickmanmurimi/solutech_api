@@ -17,11 +17,13 @@ class OrdersController extends Controller
      */
     public function index(Request $request): AnonymousResourceCollection
     {
-        $paginate = $request->get('paginate', 10);
-
-        $orders = Order::search('status', $request->get('status'))
-            ->with('depot')
-            ->orderBy('created_at', 'DESC')->paginate();
+        $orders = Order::search('status', $request->input('status'))
+            ->search('name', $request->input('name'))
+            ->search('address', $request->input('address'))
+            ->searchRelationship('depot', 'name', $request->input('depot'))
+            ->searchRelationship('depot','depot_address', $request->input('depot_address'))
+            ->with(['depot','vehicle', 'vehicle.vehicleType'])
+            ->orderBy('created_at', 'DESC')->paginate($request->input('paginate', 10));
 
         return OrderResource::collection($orders);
     }

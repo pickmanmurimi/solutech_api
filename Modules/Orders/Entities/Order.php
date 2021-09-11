@@ -44,7 +44,10 @@ class Order extends Model
      * @var string[] $casts
      */
     protected $casts = [
-        'options' => 'json'
+        'options' => 'json',
+        'dispatched_at' => 'datetime',
+        'loading_at' => 'datetime',
+        'delivered_at' => 'datetime',
     ];
 
     /**

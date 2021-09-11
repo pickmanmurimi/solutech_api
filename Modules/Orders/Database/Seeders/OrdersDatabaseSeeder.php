@@ -4,6 +4,8 @@ namespace Modules\Orders\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Depots\Entities\Depot;
+use Modules\Orders\Entities\Order;
 
 class OrdersDatabaseSeeder extends Seeder
 {
@@ -16,6 +18,8 @@ class OrdersDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
+        Depot::factory()->count(2)->create();
+        Order::factory(20)->create();
         // $this->call("OthersTableSeeder");
     }
 }
