@@ -22,11 +22,12 @@ class VehiclesController extends Controller
      */
     public function index(Request $request): AnonymousResourceCollection
     {
-        $paginate = $request->get('paginate', 10);
-
-        $vehicles = Vehicle::with('vehicleType')
+        $vehicles = Vehicle::search('status', $request->input('status'))
+            ->search('registration', $request->input('registration'))
+            ->search('make', $request->input('make'))
+            ->with('vehicleType')
             ->orderBy('created_at', 'DESC')
-            ->paginate($paginate);
+            ->paginate($request->input('paginate', 10));
 
         return VehicleResource::collection($vehicles);
     }
@@ -42,9 +43,9 @@ class VehiclesController extends Controller
 
         /** @var Vehicle $vehicle */
         $vehicle = $vehicle_type->vehicles()->create([
-            "name" => $request->name,
+            "registration" => $request->registration,
             "make" => $request->make,
-            "status" => $request->status,
+            "status" => Vehicle::AVAILABLE,
         ]);
 
         return new VehicleResource($vehicle);
@@ -74,7 +75,7 @@ class VehiclesController extends Controller
 
         /** @var Vehicle $vehicle */
         $vehicle->update([
-            "name" => $request->name,
+            "registration" => $request->registration,
             "make" => $request->make,
             "vehicle_type_id" => $vehicle_type->id,
         ]);
@@ -95,4 +96,5 @@ class VehiclesController extends Controller
 
         return $this->sendSuccess('Vehicle deleted', 200);
     }
+
 }

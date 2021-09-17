@@ -5,7 +5,7 @@ namespace Modules\Vehicles\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * @property mixed name
+ * @property mixed registration
  * @property mixed make
  * @property mixed status
  * @property mixed vehicle_type_id
@@ -20,7 +20,7 @@ class CreateVehicleRequest extends FormRequest
     public function rules()
     {
         return [
-            "name" => ['required','unique:vehicles,name'],
+            "registration" => ['required','unique:vehicles,registration'],
             "make" => ['required'],
             "vehicle_type_id" => ['required', 'exists:vehicle_types,id'],
         ];

@@ -38,7 +38,7 @@ class Vehicle extends Model
     public const TRANSIT = 'transit';
 
     protected $fillable = [
-        "name",
+        "registration",
         "make",
         "status",
         "vehicle_type_id",
