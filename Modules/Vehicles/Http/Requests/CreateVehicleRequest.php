@@ -20,7 +20,7 @@ class CreateVehicleRequest extends FormRequest
     public function rules()
     {
         return [
-            "registration" => ['required','unique:vehicles,name'],
+            "registration" => ['required','unique:vehicles,registration'],
             "make" => ['required'],
             "vehicle_type_id" => ['required', 'exists:vehicle_types,id'],
         ];

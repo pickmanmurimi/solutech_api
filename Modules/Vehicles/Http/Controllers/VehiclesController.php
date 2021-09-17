@@ -45,7 +45,7 @@ class VehiclesController extends Controller
         $vehicle = $vehicle_type->vehicles()->create([
             "registration" => $request->registration,
             "make" => $request->make,
-            "status" => $request->status,
+            "status" => Vehicle::AVAILABLE,
         ]);
 
         return new VehicleResource($vehicle);
@@ -96,4 +96,5 @@ class VehiclesController extends Controller
 
         return $this->sendSuccess('Vehicle deleted', 200);
     }
+
 }
